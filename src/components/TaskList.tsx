@@ -15,7 +15,7 @@ export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
-function handleCreateNewTask() {
+  function handleCreateNewTask() {
     // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
     if (!newTaskTitle) return;
 
@@ -32,21 +32,34 @@ function handleCreateNewTask() {
 
   function handleToggleTaskCompletion(id: number) {
     // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
-    const newTaskComplete = tasks.map(task => task.id === id ? 
-      { ...task, isComplete: !task.isComplete } : task)    
+    const newTaskComplete = tasks.map(task => task.id === id ?
+      { ...task, isComplete: !task.isComplete } : task)
     setTasks(newTaskComplete)
   }
 
   function handleRemoveTask(id: number) {
     // Remova uma task da listagem pelo ID
-    const filteredActiveTasks = tasks.filter(task => task.id !== id)
-    setTasks(filteredActiveTasks)
+    const filteredTasks = tasks.filter(task => task.id !== id)
+    setTasks(filteredTasks)
+  }
+
+  function handleRemoveAllTasksComplete() {
+    // Remove todas as tasks com isComplete=true    
+    const filteredNotCompleteTasks = tasks.filter(task => task.isComplete !== true)
+    setTasks(filteredNotCompleteTasks)
+  }
+  function handleRemoveAllTasks() {
+    // Remove todas as tasks independente do isComplete
+    setTasks([])
   }
 
   return (
     <section className="task-list container">
+
       <header>
+
         <h2>Minhas tasks</h2>
+
         <div className="input-group">
           <input
             type="text"
@@ -58,6 +71,16 @@ function handleCreateNewTask() {
             <FiCheckSquare size={16} color="#fff" />
           </button>
         </div>
+
+        <div className="input-trash-group">
+          <button type="button" onClick={() => handleRemoveAllTasksComplete()}>
+            <FiTrash size={16} /> Limpar finalizados
+          </button>
+          <button type="button" onClick={() => handleRemoveAllTasks()}>
+            <FiTrash size={16} /> Limpar todos to.do
+          </button>
+        </div>
+
       </header>
 
       <main>

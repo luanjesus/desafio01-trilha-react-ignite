@@ -1,3 +1,5 @@
+
+
 section.task-list {
   background: var(--shapes);
   border-radius: 1rem;
@@ -9,12 +11,14 @@ section.task-list {
 
   filter: drop-shadow(0px 24px 64px rgba(0, 0, 0, 0.06));
   
+
+
   header {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    
+
     h2 {
       color: var(--text-title);
       font-size: 2.55rem;
@@ -24,7 +28,6 @@ section.task-list {
       display: flex;
       gap: 0.25rem;
       align-items: center;
-
       background: #fff;
       font-size: 16px;
       
@@ -33,8 +36,7 @@ section.task-list {
         background: var(--background);
         border: 0;
         color: var(--text);
-        padding: 12px 24px;
-        
+        padding: 12px 24px;    
         border-radius: 8px;
         border: 0;
         
@@ -58,24 +60,50 @@ section.task-list {
 
         &:hover {
           filter: brightness(1.3);
+          
         }
       }
     }
+
+    .input-trash-group{
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: center;
+      background: #fff;
+
+      button {
+        background: transparent;
+        color: var(--text-title);
+        border: 0;
+        border-radius: 8px;
+        svg {
+          color: var(--red);
+        }
+
+        &:hover {
+            svg {
+              filter: brightness(0.5)
+            }
+          }
+      }
+
+    }
+
   }
 
   main {
     margin-top: 3rem;
-
     ul {
       list-style: none;
-  
-      li {
+      
+      li {        
         display: flex;
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid #EBEBEB;
         padding: 1rem 0;
-
+        $trash-visibility: visible;
         div {
           display: flex;
           align-items: center;
@@ -93,7 +121,7 @@ section.task-list {
               opacity: 0.6;
             }
           }
-
+          
           .checkbox-container {
             display: block;
             position: relative;
