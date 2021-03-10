@@ -1,4 +1,17 @@
 :root {
+  --blue:  #273fad96;
+  --purple: #5f27cd;
+  --green: #3fad27d2;
+  --red: 	#ad273f96;
+  --background: #EBEBEB;
+  --background2: #eeeeeeb2;
+  --shapes: #FFFFFF;
+  --text-title: #3D3D4D; 
+  --text: #1C1C29;
+  --text-light: #A09CB1;
+
+  background: var(--background2);
+  /*
   --blue:  #273FAD;
   --green: #3FAD27;
   --red: 	#ad273f;
@@ -6,7 +19,7 @@
   --shapes: #FFFFFF;
   --text-title: #3D3D4D; 
   --text: #1C1C29;
-  --text-light: #A09CB1;
+  --text-light: #A09CB1; */
 }
 
 * {
