@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { App } from '../App'
+import { useState, useEffect } from 'react'
 
 import '../styles/tasklist.scss'
 
@@ -14,7 +13,7 @@ interface Task {
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
-
+  const [showTrashBlock, setShowTrashBlock] = useState(false);
   function handleCreateNewTask() {
     // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
     if (!newTaskTitle) return;
@@ -27,7 +26,6 @@ export function TaskList() {
 
     setTasks(oldTaskState => [...oldTaskState, newTask])
     setNewTaskTitle('');
-
   }
 
   function handleToggleTaskCompletion(id: number) {
@@ -35,23 +33,35 @@ export function TaskList() {
     const newTaskComplete = tasks.map(task => task.id === id ?
       { ...task, isComplete: !task.isComplete } : task)
     setTasks(newTaskComplete)
+
   }
 
   function handleRemoveTask(id: number) {
     // Remova uma task da listagem pelo ID
     const filteredTasks = tasks.filter(task => task.id !== id)
     setTasks(filteredTasks)
+
   }
 
   function handleRemoveAllTasksComplete() {
-    // Remove todas as tasks com isComplete=true    
+    // Remove todas as tasks com isComplete=true  
     const filteredNotCompleteTasks = tasks.filter(task => task.isComplete !== true)
     setTasks(filteredNotCompleteTasks)
+
   }
   function handleRemoveAllTasks() {
     // Remove todas as tasks independente do isComplete
     setTasks([])
   }
+
+  useEffect(() => {
+    if (tasks.length <= 1 && showTrashBlock === true) {
+      setShowTrashBlock(false)
+    } else if (tasks.length > 1 && showTrashBlock === false) {
+      setShowTrashBlock(true)
+    }
+
+  }, [tasks])
 
   return (
     <section className="task-list container">
@@ -71,19 +81,27 @@ export function TaskList() {
             <FiCheckSquare size={16} color="#fff" />
           </button>
         </div>
-
-        <div className="input-trash-group">
-          <button type="button" onClick={() => handleRemoveAllTasksComplete()}>
-            <FiTrash size={16} /> Limpar finalizados
-          </button>
-          <button type="button" onClick={() => handleRemoveAllTasks()}>
-            <FiTrash size={16} /> Limpar todos to.do
-          </button>
-        </div>
-
       </header>
 
       <main>
+        {
+          showTrashBlock ?
+          <div className="input-trash-group">
+            <div>
+              <button type="button" onClick={() => handleRemoveAllTasksComplete()}>
+                <FiTrash size={16} /> 
+              </button>
+              <span>Limpar finalizados</span>              
+            </div>
+          <div>
+              <button type="button" onClick={() => handleRemoveAllTasks()}>
+                <FiTrash size={16} /> 
+              </button>
+              <span>Limpar todos to.do</span>              
+            </div>
+          </div>
+            : null
+        }
         <ul>
           {tasks.map(task => (
             <li key={task.id}>
